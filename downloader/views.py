@@ -19,7 +19,8 @@ def extract_audio(req):
             video_title = yt.title
             audio_stream = yt.streams.filter(only_audio = True).first()
 
-            mp4_file_path = audio_stream.download(output_path=settings.MEDIA_ROOT)
+            destination_path = os.path.join(settings.MEDIA_ROOT, 'audios')
+            mp4_file_path = audio_stream.download(output_path=destination_path)
             mp3_file_path = mp4_file_path.replace('.mp4', '.mp3')
 
             audio = AudioSegment.from_file(mp4_file_path, format='mp4')

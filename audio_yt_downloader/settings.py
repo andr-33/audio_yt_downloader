@@ -47,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'downloader.middlewares.DeleteUsedAudioFileMiddleware',
 ]
 
 ROOT_URLCONF = 'audio_yt_downloader.urls'
