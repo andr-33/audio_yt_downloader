@@ -1,0 +1,4 @@
+#Python's modules cache
+__pycache__/
+
+audios/

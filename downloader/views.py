@@ -3,6 +3,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from pytube import YouTube
 from pydub import AudioSegment
+from io import BytesIO
 import os
 import json
 
@@ -28,8 +29,18 @@ def extract_audio(req):
 
             os.remove(mp4_file_path)
 
-            res = FileResponse(open(mp3_file_path, 'rb'), as_attachment=True)
+            with open(mp3_file_path, 'rb') as audio_file:
+                audio_file_content = audio_file.read()
+
+            os.remove(mp3_file_path)
+
+            audio_bytes = BytesIO()
+            audio_bytes.write(audio_file_content)
+            audio_bytes.seek(0)
+            
+            res = FileResponse(audio_bytes, as_attachment=True)
             res['Content-Disposition'] = f'attachment; filename="{video_title}.mp3"'
+            res['Content-Type'] = 'audio/mpeg'
             return res
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
