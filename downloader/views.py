@@ -41,6 +41,7 @@ def extract_audio(req):
             res = FileResponse(audio_bytes, as_attachment=True)
             res['Content-Disposition'] = f'attachment; filename="{video_title}.mp3"'
             res['Content-Type'] = 'audio/mpeg'
+            res['Access-Control-Allow-Origin'] = '*'
             return res
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
